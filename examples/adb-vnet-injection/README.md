@@ -25,70 +25,71 @@ The identity that you use in `az login` to deploy this template should have cont
 
 Do following steps:
 
-Run `terraform init` to initialize terraform and download required providers.
+1. Run `terraform init` to initialize terraform and download required providers.
 
-Run `terraform plan` to see what resources will be deployed.
+1. Run `terraform plan` to see what resources will be deployed.
 
-Run `terraform apply` to deploy resources to your Azure environment. Since we used `az login` method to authenticate to providers, you will be prompted to login to Azure via browser. Enter `yes` when prompted to deploy resources.
+1. Run `terraform apply` to deploy resources to your Azure environment. Since we used `az login` method to authenticate to providers, you will be prompted to login to Azure via browser. Enter `yes` when prompted to deploy resources.
 
 Step 4: Verify deployment
 -------------------------
 Navigate to Azure Portal and verify that all resources were deployed successfully. You should now have a vnet-injected workspace with one cluster deployed.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-| Name                                                                         | Version  |
-| ---------------------------------------------------------------------------- | -------- |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm)          | >=4.0.0  |
+| Name | Version |
+|------|---------|
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >=4.0.0 |
 | <a name="requirement_databricks"></a> [databricks](#requirement\_databricks) | >=1.52.0 |
-| <a name="requirement_random"></a> [random](#requirement\_random)             |          |
 
 ## Providers
 
-| Name                                                                   | Version |
-| ---------------------------------------------------------------------- | ------- |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm)          | 4.9.0  |
-| <a name="provider_databricks"></a> [databricks](#provider\_databricks) | 1.58.0  |
-| <a name="provider_random"></a> [random](#provider\_random)             | 3.6.3   |
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.9.0 |
+| <a name="provider_databricks"></a> [databricks](#provider\_databricks) | 1.58.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.6.3 |
 
 ## Modules
 
-| Name                                                                                                                           | Source                        | Version |
-| ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- | ------- |
-| <a name="module_auto_scaling_cluster_example"></a> [auto\_scaling\_cluster\_example](#module\_auto\_scaling\_cluster\_example) | ./modules/autoscaling_cluster | n/a     |
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_auto_scaling_cluster_example"></a> [auto\_scaling\_cluster\_example](#module\_auto\_scaling\_cluster\_example) | ./modules/autoscaling_cluster | n/a |
 
 ## Resources
 
-| Name                                                                                                                                                                                   | Type        |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| [azurerm_databricks_workspace.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_workspace)                                           | resource    |
-| [azurerm_network_security_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group)                                          | resource    |
-| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group)                                                          | resource    |
-| [azurerm_subnet.private](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet)                                                                       | resource    |
-| [azurerm_subnet.public](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet)                                                                        | resource    |
-| [azurerm_subnet_network_security_group_association.private](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association) | resource    |
-| [azurerm_subnet_network_security_group_association.public](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association)  | resource    |
-| [azurerm_virtual_network.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network)                                                        | resource    |
-| [random_string.naming](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string)                                                                          | resource    |
-| [databricks_spark_version.latest_lts](https://registry.terraform.io/providers/databricks/databricks/latest/docs/data-sources/spark_version)                                            | data source |
+| Name | Type |
+|------|------|
+| [azurerm_databricks_workspace.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_workspace) | resource |
+| [azurerm_network_security_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group) | resource |
+| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
+| [azurerm_subnet.private](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
+| [azurerm_subnet.public](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
+| [azurerm_subnet_network_security_group_association.private](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association) | resource |
+| [azurerm_subnet_network_security_group_association.public](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association) | resource |
+| [azurerm_virtual_network.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
+| [random_string.naming](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
+| [databricks_spark_version.latest_lts](https://registry.terraform.io/providers/databricks/databricks/latest/docs/data-sources/spark_version) | data source |
 
 ## Inputs
 
-| Name                                                                                                                               | Description | Type     | Default             | Required |
-| ---------------------------------------------------------------------------------------------------------------------------------- | ----------- | -------- | ------------------- | :------: |
-| <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id)                                                  | n/a         | `string` |                     |    yes   |
-| <a name="input_cidr"></a> [cidr](#input\_cidr)                                                                                     | n/a         | `string` | `"10.179.0.0/20"`   |    no    |
-| <a name="input_dbfs_prefix"></a> [dbfs\_prefix](#input\_dbfs\_prefix)                                                              | n/a         | `string` | `"dbfs"`            |    no    |
-| <a name="input_global_auto_termination_minute"></a> [global\_auto\_termination\_minute](#input\_global\_auto\_termination\_minute) | n/a         | `number` | `30`                |    no    |
-| <a name="input_node_type"></a> [node\_type](#input\_node\_type)                                                                    | n/a         | `string` | `"Standard_DS3_v2"` |    no    |
-| <a name="input_rglocation"></a> [rglocation](#input\_rglocation)                                                                   | n/a         | `string` | `"southeastasia"`   |    no    |
-| <a name="input_workspace_prefix"></a> [workspace\_prefix](#input\_workspace\_prefix)                                               | n/a         | `string` | `"adb"`             |    no    |
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | Azure Subscription ID to deploy the workspace into | `string` | n/a | yes |
+| <a name="input_cidr"></a> [cidr](#input\_cidr) | Network range for created VNet | `string` | `"10.179.0.0/20"` | no |
+| <a name="input_dbfs_prefix"></a> [dbfs\_prefix](#input\_dbfs\_prefix) | Name prefix for DBFS Root Storage account | `string` | `"dbfs"` | no |
+| <a name="input_global_auto_termination_minute"></a> [global\_auto\_termination\_minute](#input\_global\_auto\_termination\_minute) | Auto-termination time for created cluster | `number` | `30` | no |
+| <a name="input_node_type"></a> [node\_type](#input\_node\_type) | Node type for created cluster | `string` | `"Standard_DS3_v2"` | no |
+| <a name="input_rglocation"></a> [rglocation](#input\_rglocation) | Location of resource group to create | `string` | `"southeastasia"` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Optional tags to add to resources | `map(string)` | `{}` | no |
+| <a name="input_workspace_prefix"></a> [workspace\_prefix](#input\_workspace\_prefix) | Name prefix for Azure Databricks workspace | `string` | `"adb"` | no |
 
 ## Outputs
 
-| Name                                                                                                                                                           | Description |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| <a name="output_databricks_azure_workspace_resource_id"></a> [databricks\_azure\_workspace\_resource\_id](#output\_databricks\_azure\_workspace\_resource\_id) | n/a         |
-| <a name="output_module_cluster_id"></a> [module\_cluster\_id](#output\_module\_cluster\_id)                                                                    | n/a         |
-| <a name="output_workspace_url"></a> [workspace\_url](#output\_workspace\_url)                                                                                  | n/a         |
+| Name | Description |
+|------|-------------|
+| <a name="output_databricks_azure_workspace_resource_id"></a> [databricks\_azure\_workspace\_resource\_id](#output\_databricks\_azure\_workspace\_resource\_id) | n/a |
+| <a name="output_module_cluster_id"></a> [module\_cluster\_id](#output\_module\_cluster\_id) | n/a |
+| <a name="output_workspace_url"></a> [workspace\_url](#output\_workspace\_url) | n/a |
 <!-- END_TF_DOCS -->
